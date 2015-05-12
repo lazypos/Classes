@@ -16,8 +16,8 @@
 using namespace std;
 
 class CPlayer{
-    int        seq = 0;
-    float      time = 0;
+    int        seq = 0;     // 玩家序号
+    float      time = 0;    // 玩家出牌剩余时间
     bool       isActive = false; // 是否是该玩家出牌
     bool       isOver = false; // 出完
     bool       isMainPlayer = false; // 是不是主玩家

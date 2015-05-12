@@ -25,17 +25,17 @@ typedef struct _operator_message{
 typedef shared_ptr<optMsg> optmsg;
 
 class CMessageQueue {
-    list<optmsg>    _lstMsg;
-    list<optmsg>    _sendMsg;
+    list<optMsg>    _lstMsg;
+    list<optMsg>    _sendMsg;
     mutex           _msgMutex;
     mutex           _sendMutex;
 public:
-    void    push_message(optmsg msg);
-    optmsg  pop_message();
+    void    push_message(optMsg msg);
+    optMsg  pop_message();
     
-    void    push_sendmessage(optmsg msg);
-    optmsg  pop_sendmessage();
+    void    push_sendmessage(optMsg msg);
+    optMsg  pop_sendmessage();
 };
 
-typedef shared_ptr<CMessageQueue> msg_queue;
+typedef mysigleton<CMessageQueue>  msg_queue;
 #endif /* defined(__redten__CMessageQueue__) */

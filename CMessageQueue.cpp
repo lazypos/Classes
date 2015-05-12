@@ -9,15 +9,15 @@
 #include "CMessageQueue.h"
 
 void
-CMessageQueue::push_message(optmsg msg){
+CMessageQueue::push_message(optMsg msg){
     lock_guard<mutex> lk(_msgMutex);
     _lstMsg.push_back(msg);
 }
 
-optmsg
+optMsg
 CMessageQueue::pop_message(){
     lock_guard<mutex> lk(_msgMutex);
-    optmsg op;
+    optMsg op;
     if (!_lstMsg.empty()) {
         op = _lstMsg.front();
         _lstMsg.pop_front();
@@ -26,15 +26,15 @@ CMessageQueue::pop_message(){
 }
 
 void
-CMessageQueue::push_sendmessage(optmsg msg){
+CMessageQueue::push_sendmessage(optMsg msg){
     lock_guard<mutex> lk(_sendMutex);
     _sendMsg.push_back(msg);
 }
 
-optmsg
+optMsg
 CMessageQueue::pop_sendmessage(){
     lock_guard<mutex> lk(_sendMutex);
-    optmsg op;
+    optMsg op;
     if (!_sendMsg.empty()) {
         op = _sendMsg.front();
         _sendMsg.pop_front();

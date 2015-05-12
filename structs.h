@@ -19,6 +19,8 @@ typedef enum _game_opt{
     opt_player_getout,    // 出牌结束,进入等待状态
     opt_game_start, // 游戏开始
     opt_game_over,  // 游戏结束
+    opt_game_connect, // 连上服务器
+    opt_game_disconnect, // 与服务器断开连接
 }game_opt;
 
 
