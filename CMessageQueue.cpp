@@ -34,7 +34,7 @@ CMessageQueue::push_sendmessage(optMsg msg){
 optMsg
 CMessageQueue::pop_sendmessage(){
     lock_guard<mutex> lk(_sendMutex);
-    optMsg op;
+    optMsg op{};
     if (!_sendMsg.empty()) {
         op = _sendMsg.front();
         _sendMsg.pop_front();

@@ -4,7 +4,7 @@
 //
 //  Created by zcw on 15-4-9.
 //
-//
+// 卡牌精灵类，用于生产卡牌精灵
 
 #ifndef __redten__CCardSprite__
 #define __redten__CCardSprite__

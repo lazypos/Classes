@@ -4,13 +4,16 @@
 //
 //  Created by zcw on 15-4-7.
 //
-//
+// 游戏重要结构体
 
 #ifndef redten_structs_h
 #define redten_structs_h
+#include <string>
+using namespace std;
 
 typedef enum _game_opt{
-    opt_add_player = 0, // 玩家加入
+    opt_unknow = -1,
+    opt_add_player, // 玩家加入
     opt_del_player, // 玩家离开
     opt_player_list, // 玩家列表
     opt_player_ready,// 玩家准备
@@ -22,6 +25,12 @@ typedef enum _game_opt{
     opt_game_connect, // 连上服务器
     opt_game_disconnect, // 与服务器断开连接
 }game_opt;
+
+typedef struct _operator_message{
+    game_opt    opt;
+    string      content;
+}optMsg;
+
 
 
 

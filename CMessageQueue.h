@@ -17,11 +17,6 @@
 #include "structs.h"
 using namespace std;
 
-typedef struct _operator_message{
-    game_opt    opt;
-    string      content;
-}optMsg;
-
 typedef shared_ptr<optMsg> optmsg;
 
 class CMessageQueue {

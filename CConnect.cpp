@@ -10,6 +10,7 @@
 #include <functional>
 #include <unistd.h>
 #include "CMessageQueue.h"
+#include "CCommendMode.h"
 
 void
 CConnect::start_connect_thread(){
@@ -44,7 +45,14 @@ CConnect::connect_to_server(){
 void
 CConnect::send_thread(){
     while (true) {
-        
+        optMsg op = msg_queue::instance()->pop_sendmessage();
+        if (op.opt != opt_unknow) {
+            string rst = comManager::instance()->dispatchCommend(op);
+            if (!rst.empty()) {
+                // do same things,send to server
+            }
+        }
+        usleep(1000);
     }
 }
 

@@ -4,7 +4,7 @@
 //
 //  Created by zcw on 15-5-12.
 //
-//  账号管理
+//  账号管理类，用户管理用户的重要基本信息
 
 #ifndef __redten__CAccountManager__
 #define __redten__CAccountManager__

@@ -4,7 +4,7 @@
 //
 //  Created by zcw on 15-4-7.
 //
-//
+// 卡牌操作基础类，用户验证卡牌的基本规则
 
 #ifndef __redten__CCardOperator__
 #define __redten__CCardOperator__

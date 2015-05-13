@@ -4,7 +4,7 @@
 //
 //  Created by zcw on 15-4-20.
 //
-//
+// 玩家类，记录该局游戏每个玩家的信息
 
 #ifndef __redten__CPlayer__
 #define __redten__CPlayer__

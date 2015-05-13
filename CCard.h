@@ -4,7 +4,7 @@
 //
 //  Created by zcw on 15-4-9.
 //
-//
+// 基本卡牌类，保存卡牌的基础属性
 
 #ifndef __redten__CCard__
 #define __redten__CCard__

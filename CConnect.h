@@ -4,7 +4,7 @@
 //
 //  Created by zcw on 15-5-12.
 //
-//
+// 网络通信类
 
 #ifndef __redten__CConnect__
 #define __redten__CConnect__
