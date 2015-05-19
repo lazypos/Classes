@@ -10,6 +10,7 @@
 #define __redten__CCardOperatorRedTen__
 
 #include <stdio.h>
+//#include "sigleton.h"
 #include "CCardOperatorBase.h"
 
 class CCardOperatorRedTen
@@ -17,5 +18,7 @@ class CCardOperatorRedTen
 {
     
 };
+
+//typedef mysigleton<CCardOperatorRedTen> redten_opt;
 
 #endif /* defined(__redten__CCardOperatorRedTen__) */

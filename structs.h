@@ -19,7 +19,7 @@ typedef enum _game_opt{
     opt_player_ready,// 玩家准备
     opt_player_chupai, // 玩家出牌
     opt_player_pass,   // 玩家pass
-    opt_player_getout,    // 出牌结束,进入等待状态
+    opt_player_getout, // 出牌结束,进入等待状态
     opt_game_start, // 游戏开始
     opt_game_over,  // 游戏结束
     opt_game_connect, // 连上服务器
@@ -31,7 +31,17 @@ typedef struct _operator_message{
     string      content;
 }optMsg;
 
+#define opt_login       100 // 登录
+#define opt_add_desk    101 // 加入桌子
 
+
+// 通讯头
+typedef struct _conn_header{
+    unsigned int     flag;  // 标志0x5183
+    unsigned int     opt;   // 操作类型
+    unsigned int     datalen;// 数据长度
+    unsigned int     crc;   // 检验和
+}_conn_header;
 
 
 #endif
