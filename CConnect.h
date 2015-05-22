@@ -11,27 +11,23 @@
 
 
 #include <stdio.h>
-#include <thread>
 #include <string>
 #include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 using namespace std;
 
 class CConnect {
-    shared_ptr<thread> thread_ptr;
-    shared_ptr<thread> recv_thread_ptr;
-    shared_ptr<thread> send_thread_ptr;
-    string _servip = "172.16.1.110";
-    unsigned short _servport = 8886;
+    string _servip = "127.0.0.1";
+    unsigned short _servport = 5183;
     bool    bconnected = false;
-    
-protected:
-    void connect_thread();
-    void send_thread();
-    void recv_thread();
-    bool connect_to_server();
+    int     _fd = -1;
     
 public:
-    void start_connect_thread();
+    bool connect_to_server();
+    bool send_to_server(const char* data, size_t len);
+    bool recv_from_server(char* buf, size_t len);
+    inline bool isConnected(){return bconnected;}
 };
 
 #endif /* defined(__redten__CConnect__) */

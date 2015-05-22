@@ -12,13 +12,22 @@
 #include <stdio.h>
 #include "sigleton.h"
 
+//typedef enum _play_stat{
+//    stat_nologin = -1, // 未登录
+//    stat_
+//}play_stat;
+
 class CAccountManager {
     int _uid = 0;   // 用户唯一ID
     int _session;   // 本次登录的认证号
     int _serverkey; // 服务器加密的密钥
     int _clientkey; // 客户端密钥
+    
+    //play_stat   _stat; // 当前状态
 public:
     
 };
+
+typedef mysigleton<CAccountManager> accountMgr;
 
 #endif /* defined(__redten__CAccountManager__) */

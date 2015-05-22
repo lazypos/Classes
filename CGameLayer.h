@@ -15,6 +15,7 @@ USING_NS_CC;
 
 class CGameLayer : public CCLayer {
     
+    CCSize  winSize;
     
     bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);

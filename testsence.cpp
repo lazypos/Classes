@@ -1,5 +1,7 @@
 #include "testsence.h"
 #include "HelloWorldScene.h"
+#include "CConnectDelegate.h"
+#include "structs.h"
 
 CCScene* testsence::scene()
 {
@@ -19,27 +21,65 @@ CCScene* testsence::scene()
 // on "init" you need to initialize your instance
 bool testsence::init()
 {
-    //////////////////////////////
-    // 1. super init first
     if ( !CCLayer::init() )
-    {
         return false;
-    }
     
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
     
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
+    // 加入正在加入桌子的字幕
+    CCLabelTTF* pLabel = CCLabelTTF::create("", "Arial", 24);
+    pLabel->setPosition(ccp(origin.x + visibleSize.width/2,
+                            origin.y + visibleSize.height/2));
+    this->addChild(pLabel, 1, 100);
     
-    // add a "close" icon to exit the progress. it's an autorelease object
-    setTouchEnabled(true);
-    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
+    // 状态显示调度
+    this->schedule(schedule_selector(testsence::statSchedule), 0.1f);
+    // 网络连接调度
+    this->schedule(schedule_selector(testsence::connectSchedule), 0.1f);
     
     return true;
 }
 
+void
+testsence::statSchedule(float dt){
+    static int time = 0;
+    static int dot = 0;
+    
+    CCLabelTTF* pLabel = (CCLabelTTF*)(this->getChildByTag(100));
+    if (time++ %10 == 0) {
+        int dotCounts = dot++%4;
+        if (dotCounts == 0) {
+            if (blogin)
+                pLabel->setString("正在匹配玩家");
+            else
+                pLabel->setString("正在登陆");
+        }else if (dotCounts == 1){
+            if (blogin)
+                pLabel->setString("正在匹配玩家 .");
+            else
+                pLabel->setString("正在登陆 .");
+        }else if (dotCounts == 2){
+            if (blogin)
+                pLabel->setString("正在匹配玩家 . .");
+            else
+                pLabel->setString("正在登陆 . .");
+        }else if (dotCounts == 3){
+            if (blogin)
+                pLabel->setString("正在匹配玩家 . . .");
+            else
+                pLabel->setString("正在登陆 . . .");
+        }
+    }
+    
+}
+
+void
+testsence::connectSchedule(float dt){
+    if (!blogin) {
+        
+    }
+}
 
 void testsence::menuCloseCallback(CCObject* pSender)
 {

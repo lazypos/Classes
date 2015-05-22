@@ -7,61 +7,55 @@
 //
 
 #include "CConnect.h"
-#include <functional>
 #include <unistd.h>
-#include "CMessageQueue.h"
-#include "CCommendMode.h"
-
-void
-CConnect::start_connect_thread(){
-    thread_ptr = shared_ptr<thread>(new thread(bind(&CConnect::connect_thread, this)));
-    thread_ptr->detach();
-    recv_thread_ptr = shared_ptr<thread>(new thread(bind(&CConnect::connect_thread, this)));
-    recv_thread_ptr->detach();
-    send_thread_ptr = shared_ptr<thread>(new thread(bind(&CConnect::connect_thread, this)));
-    send_thread_ptr->detach();
-}
-
-// 连接线程，断线自动重连
-void CConnect::connect_thread(){
-    while (true) {
-        if (!bconnected) {
-            if (connect_to_server()) {
-                bconnected = true;
-                optMsg op;
-                op.opt = opt_game_connect;
-                msg_queue::instance()->push_message(op);
-            }
-        }
-        sleep(5);
-    }
-}
 
 bool
 CConnect::connect_to_server(){
-    return true;
+    struct sockaddr_in servaddr;
+    memset(&servaddr, 0, sizeof(servaddr));
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_port = htonl(_servport);
+    servaddr.sin_addr.s_addr = inet_addr(_servip.c_str());
+    
+    if (_fd)
+    close(_fd);
+    _fd = socket(AF_INET, SOCK_STREAM, 0);
+    int n = connect(_fd, (struct sockaddr*)&servaddr, sizeof(servaddr));
+    if (n == 0) {
+        printf("connect ok\n");
+        return true;
+    }
+    _fd = 0;
+    return false;
 }
 
-void
-CConnect::send_thread(){
-    while (true) {
-        optMsg op = msg_queue::instance()->pop_sendmessage();
-        if (op.opt != opt_unknow) {
-            string rst = comManager::instance()->dispatchCommend(op);
-            if (!rst.empty()) {
-                // do same things,send to server
+bool
+CConnect::send_to_server(const char* data, size_t len){
+    size_t sendlen = 0;
+    if (_fd) {
+        while (sendlen < len) {
+            int n = send(_fd, data+sendlen, len-sendlen, 0);
+            if (n <= 0) {
+                break;
             }
+            sendlen += n;
         }
-        usleep(1000);
     }
+    return (sendlen == len);
 }
 
-void
-CConnect::recv_thread(){
-    while (true) {
-        
+bool
+CConnect::recv_from_server(char* buf, size_t len){
+    size_t recvlen = 0;
+    if (_fd){
+        while (recvlen < len) {
+            int n = recv(_fd, (void*)(buf+recvlen), len-recvlen, 0);
+            if (n <=0) {
+                break;
+            }
+            recvlen += n;
+        }
     }
+    return (recvlen == len);
 }
-
-
 

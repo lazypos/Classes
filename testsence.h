@@ -28,7 +28,14 @@ public:
     CREATE_FUNC(testsence);
     
    //bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-    bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+   bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    
+    // 加入桌子调度
+    void    statSchedule(float dt);
+    // 网络连接调度
+    void    connectSchedule(float dt);
+    
+    bool    blogin = false;
 };
 
 #endif

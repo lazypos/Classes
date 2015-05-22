@@ -13,6 +13,17 @@
 bool
 CGameLayer::init(){
     CResourceMgr::instance()->init();
+    
+    // 添加背景
+    CCSprite * bg = CCSprite::create("game_bg_day.jpg");
+    winSize = CCDirector::sharedDirector()->getWinSize();
+    CCSize  bgSize = bg->getContentSize();
+    bg->setScaleX(winSize.width/bgSize.width);
+    bg->setScaleY(winSize.height/bgSize.height);
+    bg->setPosition(ccp(winSize.width/2, winSize.height/2));
+    this->addChild(bg, -1);
+
+    
     return true;
 }
 

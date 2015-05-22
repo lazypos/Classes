@@ -24,6 +24,7 @@ typedef enum _game_opt{
     opt_game_over,  // 游戏结束
     opt_game_connect, // 连上服务器
     opt_game_disconnect, // 与服务器断开连接
+    opt_game_add_desk, // jiaruzuozi 
 }game_opt;
 
 typedef struct _operator_message{

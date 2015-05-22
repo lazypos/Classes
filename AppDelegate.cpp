@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
 #include "testsence.h"
+#include "CGameLayer.h"
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
@@ -26,6 +27,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     pDirector->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
+    // 创建一个加入连接服务器和自动桌子的界面
     CCScene *pScene = testsence::scene();
 
     // run

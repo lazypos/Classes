@@ -11,12 +11,20 @@
 
 #include <stdio.h>
 #include "sigleton.h"
+#include "CConnect.h"
+#include "structs.h"
+#include <memory>
+#include <string>
+using namespace std;
 
 class CConnectDelegate {
+    shared_ptr<CConnect> _conptr = shared_ptr<CConnect>(new CConnect);
 public:
-    
+    bool    login();
+    bool    send_message(int opt, const string& content);
+    bool    recv_message(int& opt, string& content);
 };
 
-typedef mysigleton<CConnectDelegate> con_proxy;
+typedef mysigleton<CConnectDelegate> conDelegete;
 
 #endif /* defined(__redten__CConnectDelegate__) */
