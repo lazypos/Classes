@@ -21,7 +21,7 @@ class CConnectDelegate {
     shared_ptr<CConnect> _conptr = shared_ptr<CConnect>(new CConnect);
 public:
     bool    login();
-    bool    send_message(int opt, const string& content);
+    bool    send_message(int opt, const string& content = "");
     bool    recv_message(int& opt, string& content);
 };
 

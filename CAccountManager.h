@@ -25,7 +25,11 @@ class CAccountManager {
     
     //play_stat   _stat; // 当前状态
 public:
+    void    set_uid(int uid);
+    int     get_uid();
     
+    void    set_session(int session);
+    int     get_session();
 };
 
 typedef mysigleton<CAccountManager> accountMgr;

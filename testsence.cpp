@@ -76,7 +76,14 @@ testsence::statSchedule(float dt){
 
 void
 testsence::connectSchedule(float dt){
+    // 未登录
     if (!blogin) {
+        if (conDelegete::instance()->login()) {
+            blogin = true;
+        }
+    }
+    // 已经登陆
+    else{
         
     }
 }

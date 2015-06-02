@@ -19,7 +19,7 @@ using namespace std;
 
 class CConnect {
     string _servip = "127.0.0.1";
-    unsigned short _servport = 5183;
+    unsigned short _servport = 51832;
     bool    bconnected = false;
     int     _fd = -1;
     
