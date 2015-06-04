@@ -4,7 +4,7 @@
 //
 //  Created by zcw on 15-4-28.
 //
-// 游戏规则类，真正的游戏规则
+// 游戏规则类，不同的游戏有不同的游戏规则
 
 #ifndef __redten__CCardOperatorRedTen__
 #define __redten__CCardOperatorRedTen__

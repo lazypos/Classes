@@ -37,4 +37,6 @@ public:
     void             getSelectedCards(list<card_ptr>& lst); // 获取当前被选择的牌
     void             delSelectedCards(const list<int>& seq); // 删除被选择的牌
 };
+
+typedef shared_ptr<CPlayer> player_ptr;
 #endif /* defined(__redten__CPlayer__) */

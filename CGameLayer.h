@@ -11,6 +11,9 @@
 
 #include <stdio.h>
 #include "cocos2d.h"
+
+#include <vector>
+#include "CPlayer.h"
 USING_NS_CC;
 
 class CGameLayer : public CCLayer {
@@ -29,9 +32,13 @@ class CGameLayer : public CCLayer {
     bool    init();
     void    initGame();
     
+    int                 _deskNum = 0; // 桌子号
+    vector<player_ptr>  _vecPlayers;  // 列表
+    
 public:
     static CCScene* scene();
-
+    
+    void setPlayInfo(const string& info);
 };
 
 #endif /* defined(__redten__CGameLayer__) */

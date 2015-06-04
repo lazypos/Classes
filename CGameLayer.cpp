@@ -32,9 +32,14 @@ CGameLayer::initGame(){
     
 }
 
+void
+CGameLayer::setPlayInfo(const string& info){
+    
+}
+
 bool
 CGameLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
-    
+    return true;
 }
 
 void

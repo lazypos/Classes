@@ -2,6 +2,7 @@
 #include "HelloWorldScene.h"
 #include "CConnectDelegate.h"
 #include "structs.h"
+#include "CGameLayer.h"
 
 CCScene* testsence::scene()
 {
@@ -75,6 +76,11 @@ testsence::statSchedule(float dt){
 }
 
 void
+testsence::reFindDesk(){
+    badddesk = false;
+}
+
+void
 testsence::connectSchedule(float dt){
     // 未登录
     if (!blogin) {
@@ -82,9 +88,20 @@ testsence::connectSchedule(float dt){
             blogin = true;
         }
     }
-    // 已经登陆
-    else{
-        
+    // 已经登陆, 未匹配玩家
+    else if (!badddesk){
+        if (conDelegete::instance()->send_message(opt_add_desk))
+        {
+            int opt = 0;
+            string rst;
+            if (conDelegete::instance()->recv_message(opt, rst)){
+                if (opt == opt_add_desk){
+                    CCTransitionProgressHorizontal* reScene = CCTransitionProgressHorizontal ::create(1,CGameLayer::scene());
+                    CCDirector::sharedDirector()->replaceScene(reScene);
+                    badddesk = true;
+                }
+            }
+        }
     }
 }
 

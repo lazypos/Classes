@@ -36,6 +36,9 @@ public:
     void    connectSchedule(float dt);
     
     bool    blogin = false;
+    bool    badddesk = false;
+    // 重新加入桌子
+    void    reFindDesk();
 };
 
 #endif
