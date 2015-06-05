@@ -3,6 +3,7 @@
 #include "CConnectDelegate.h"
 #include "structs.h"
 #include "CGameLayer.h"
+#include "CDeskManager.h"
 
 CCScene* testsence::scene()
 {
@@ -96,6 +97,7 @@ testsence::connectSchedule(float dt){
             string rst;
             if (conDelegete::instance()->recv_message(opt, rst)){
                 if (opt == opt_add_desk){
+                    deskMamager::instance()->setPlayInfo(rst);
                     CCTransitionProgressHorizontal* reScene = CCTransitionProgressHorizontal ::create(1,CGameLayer::scene());
                     CCDirector::sharedDirector()->replaceScene(reScene);
                     badddesk = true;

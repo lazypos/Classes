@@ -9,6 +9,8 @@
 #include "CGameLayer.h"
 #include "CResourceManager.h"
 #include "CCardOperatorRedTen.h"
+#include "CDeskManager.h"
+
 
 bool
 CGameLayer::init(){
@@ -23,6 +25,12 @@ CGameLayer::init(){
     bg->setPosition(ccp(winSize.width/2, winSize.height/2));
     this->addChild(bg, -1);
 
+    // 把位置设置好
+    setPlayerPos();
+    
+    // 开启调度
+    this->schedule(schedule_selector(CGameLayer::gameSchedule), 0.1f);
+    this->schedule(schedule_selector(CGameLayer::netSchedule), 0.1f);
     
     return true;
 }
@@ -30,10 +38,29 @@ CGameLayer::init(){
 void
 CGameLayer::initGame(){
     
+    
+   
 }
 
 void
-CGameLayer::setPlayInfo(const string& info){
+CGameLayer::setPlayerPos(){
+    map<int, player_ptr>& tmp = deskMamager::instance()->_mapPlayers;
+    for (int i=0; i<3; ++i) {
+        if (tmp[i]->isMainPlayer) {
+            _mainplayer = i;
+            _downplayer = (i+1)%3;
+            _upplayer = (i+2)%3;
+        }
+    }
+}
+
+void
+CGameLayer::gameSchedule(float dt){
+    
+}
+
+void
+CGameLayer::netSchedule(float dt){
     
 }
 

@@ -10,8 +10,9 @@
 #define __redten__CAccountManager__
 
 #include <stdio.h>
+#include <string>
 #include "sigleton.h"
-
+using namespace std;
 //typedef enum _play_stat{
 //    stat_nologin = -1, // 未登录
 //    stat_
@@ -30,6 +31,9 @@ public:
     
     void    set_session(int session);
     int     get_session();
+    
+    string  username;
+    int     sorcer = 0;
 };
 
 typedef mysigleton<CAccountManager> accountMgr;

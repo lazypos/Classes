@@ -28,6 +28,8 @@ CConnectDelegate::login(){
                 DoSeparate(content, "\n", tmpmap);
                 accountMgr::instance()->set_uid(atoi(tmpmap["uid"].c_str()));
                 accountMgr::instance()->set_session(atoi(tmpmap["session"].c_str()));
+                accountMgr::instance()->username = tmpmap["username"];
+                accountMgr::instance()->username = tmpmap["sorcer"];
                 return true;
             }
         }

@@ -32,13 +32,20 @@ class CGameLayer : public CCLayer {
     bool    init();
     void    initGame();
     
-    int                 _deskNum = 0; // 桌子号
-    vector<player_ptr>  _vecPlayers;  // 列表
+    // 界面调度
+    void    gameSchedule(float dt);
+    
+    // 网络调度
+    void    netSchedule(float dt);
+
+    int     _upplayer = 0;
+    int     _downplayer = 0;
+    int     _mainplayer = 0;
+    
+    void    setPlayerPos();
     
 public:
     static CCScene* scene();
-    
-    void setPlayInfo(const string& info);
 };
 
 #endif /* defined(__redten__CGameLayer__) */
