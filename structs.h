@@ -11,6 +11,33 @@
 #include <string>
 using namespace std;
 
+typedef enum _tag{
+    tagSorcer0 = 1000,
+    tagSorcer1,
+    tagSorcer2,
+    
+    tagTime0,
+    tagTime1,
+    tagTime2,
+    
+    tagName0,
+    tagName1,
+    tagName2,
+    
+    tagCards0,
+    tagCards1,
+    tagCards2,
+    
+    
+    tagWin,
+    tagLose,
+    tagHe,
+    
+    tagDZ,
+    tagChupai,
+}gameTag;
+
+
 typedef enum _game_opt{
     opt_unknow = -1,
     opt_add_player, // 玩家加入

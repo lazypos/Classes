@@ -43,6 +43,12 @@ class CGameLayer : public CCLayer {
     int     _mainplayer = 0;
     
     void    setPlayerPos();
+    void    initMaininfo();
+    void    initDowninfo();
+    void    initUpinfo();
+    void    updateMaininfo();
+    void    updateDowninfo();
+    void    updateUpinfo();
     
 public:
     static CCScene* scene();

@@ -22,11 +22,11 @@ public:
     int                     _mainpos;
     mutex                   _mutex;
     
-
+    
     CDeskManager();
     void setPlayInfo(const string& info);
     void addPlayer(bool main, int pos, map<string,string>&mapInfo);
-    
+    void getPlayerMap(map<int ,player_ptr>& map);
 };
 
 typedef mysigleton<CDeskManager> deskMamager;

@@ -44,6 +44,7 @@ CDeskManager::addPlayer(bool main, int pos, map<string,string>&mapInfo){
         ptr->isMainPlayer = main;
         ptr->sorcer = accountMgr::instance()->sorcer;
         ptr->username = accountMgr::instance()->username;
+        printf("%s, %s", ptr->username.c_str(), accountMgr::instance()->username.c_str());
     }
     else{
         ostringstream osr;
@@ -58,10 +59,15 @@ CDeskManager::addPlayer(bool main, int pos, map<string,string>&mapInfo){
             ptr->username = mapInfo[osp.str()];
         }
     }
-    _mapPlayers[pos] = ptr;
+    //_mapPlayers[pos] = ptr;
+    _mapPlayers.insert(make_pair(pos, ptr));
 }
 
-
+void
+CDeskManager::getPlayerMap(map<int ,player_ptr>& map){
+    lock_guard<mutex> lk(_mutex);
+    map = _mapPlayers;
+}
 
 
 
