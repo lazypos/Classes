@@ -11,6 +11,7 @@
 #include "CCardOperatorRedTen.h"
 #include "CDeskManager.h"
 #include "structs.h"
+#include "CConnectDelegate.h"
 
 bool
 CGameLayer::init(){
@@ -29,11 +30,14 @@ CGameLayer::init(){
     setPlayerPos();
     // 将玩家初始化到界面
     initMaininfo();
+    initDowninfo();
+    initUpinfo();
+    
     
     // 开启调度
     this->schedule(schedule_selector(CGameLayer::gameSchedule), 0.1f);
-    this->schedule(schedule_selector(CGameLayer::netSchedule), 0.1f);
-    
+    //this->schedule(schedule_selector(CGameLayer::netSchedule), 0.1f);
+    thread_ptr = shared_ptr<thread>(new thread(std::bind(&CGameLayer::netSchedule, this)));
     return true;
 }
 
@@ -54,6 +58,7 @@ CGameLayer::setPlayerPos(){
             _upplayer = (i+2)%3;
         }
     }
+    printf("main:%d, %d, %d\n", _mainplayer, _downplayer, _upplayer);
 }
 
 void
@@ -70,13 +75,18 @@ CGameLayer::initMaininfo(){
     int sorcer = ptr->sorcer;
     char buf[20];
     memset(buf, 0, 20);
-    sprintf(buf, "%d", sorcer);
+    sprintf(buf, "%05d", sorcer);
     CCLabelBMFont* sorcerLabel = CCLabelBMFont::create(buf, "fontGreen.fnt");
     sorcerLabel->setPosition(ccp(winSize.width/2, 25));
     this->addChild(sorcerLabel, 1, tagSorcer0);
     // 昵称
-    CCLabelTTF *lebname = CCLabelTTF::create(ptr->username.c_str(), "font/Marker Felt.ttf", 35);
+    string name = "                ";
+    if (!ptr->username.empty()) {
+        name = ptr->username;
+    }
+    CCLabelTTF *lebname = CCLabelTTF::create(name.c_str(), "font/Marker Felt.ttf", 35);
     lebname->setPosition(ccp(winSize.width/2+200, 30));
+    printf("%d===", (int*)lebname);
     this->addChild(lebname, 1, tagName0);
 }
 
@@ -92,12 +102,16 @@ CGameLayer::initDowninfo(){
     int sorcer = ptr->sorcer;
     char buf[20];
     memset(buf, 0, 20);
-    sprintf(buf, "%d", sorcer);
+    sprintf(buf, "%05d", sorcer);
     CCLabelBMFont* sorcerLabel1 = CCLabelBMFont::create(buf, "fontGreen.fnt");
     sorcerLabel1->setPosition(ccp(winSize.width-100, winSize.height/2+200));
     this->addChild(sorcerLabel1, 1, tagSorcer1);
     
-    CCLabelTTF *lebname1 = CCLabelTTF::create(ptr->username.c_str(), "font/Marker Felt.ttf", 35);
+    string name = "                ";
+    if (!ptr->username.empty()) {
+        name = ptr->username;
+    }
+    CCLabelTTF *lebname1 = CCLabelTTF::create(name.c_str(), "font/Marker Felt.ttf", 35);
     lebname1->setPosition(ccp(winSize.width-100, winSize.height/2+150));
     this->addChild(lebname1, 1, tagName1);
     CCLabelBMFont* cardsNum1 = CCLabelBMFont::create("0", "fontVipLevel.fnt");
@@ -117,12 +131,16 @@ CGameLayer::initUpinfo(){
     int sorcer = ptr->sorcer;
     char buf[20];
     memset(buf, 0, 20);
-    sprintf(buf, "%d", sorcer);
+    sprintf(buf, "%05d", sorcer);
     CCLabelBMFont* sorcerLabel2 = CCLabelBMFont::create(buf, "fontGreen.fnt");
     sorcerLabel2->setPosition(ccp(150, winSize.height/2+200));
     this->addChild(sorcerLabel2, 1, tagSorcer2);
     
-    CCLabelTTF *lebname2 = CCLabelTTF::create(ptr->username.c_str(), "font/Marker Felt.ttf", 35);
+    string name = "                  ";
+    if (!ptr->username.empty()) {
+        name = ptr->username;
+    }
+    CCLabelTTF *lebname2 = CCLabelTTF::create(name.c_str(), "font/Marker Felt.ttf", 35);
     lebname2->setPosition(ccp(100, winSize.height/2+150));
     this->addChild(lebname2, 1, tagName2);
     CCLabelBMFont* cardsNum2 = CCLabelBMFont::create("0", "fontVipLevel.fnt");
@@ -135,26 +153,75 @@ CGameLayer::updateMaininfo(){
     map<int ,player_ptr> map;
     deskMamager::instance()->getPlayerMap(map);
     player_ptr ptr = map[_mainplayer];
+    
+    // 分数
+    int sorcer = ptr->sorcer;
+    char buf[20];
+    memset(buf, 0, 20);
+    sprintf(buf, "%05d", sorcer);
+    CCLabelBMFont* sorcerLabel = (CCLabelBMFont*)(this->getChildByTag(tagSorcer0));
+    sorcerLabel->setString(buf);
+    
+    string name = ptr->username;
+    CCLabelTTF *lebname = (CCLabelTTF*)(this->getChildByTag(tagName0));
+    //printf("%s,%u", name.c_str(), (int*)lebname);
+    lebname->setString(ptr->username.c_str());
+    //lebname->setString("hi");
 }
 
 void
 CGameLayer::updateDowninfo(){
+    map<int ,player_ptr> map;
+    deskMamager::instance()->getPlayerMap(map);
+    player_ptr ptr = map[_downplayer];
     
+    // 分数
+    int sorcer = ptr->sorcer;
+    char buf[20];
+    memset(buf, 0, 20);
+    sprintf(buf, "%05d", sorcer);
+    CCLabelBMFont* sorcerLabel = (CCLabelBMFont*)(this->getChildByTag(tagSorcer1));
+    sorcerLabel->setString(buf);
+    
+    CCLabelTTF *lebname = (CCLabelTTF*)(this->getChildByTag(tagName1));
+    lebname->setString(ptr->username.c_str());
 }
 
 void
 CGameLayer::updateUpinfo(){
+    map<int ,player_ptr> map;
+    deskMamager::instance()->getPlayerMap(map);
+    player_ptr ptr = map[_upplayer];
     
+    // 分数
+    int sorcer = ptr->sorcer;
+    char buf[20];
+    memset(buf, 0, 20);
+    sprintf(buf, "%05d", sorcer);
+    CCLabelBMFont* sorcerLabel = (CCLabelBMFont*)(this->getChildByTag(tagSorcer2));
+    sorcerLabel->setString(buf);
+    
+    CCLabelTTF *lebname = (CCLabelTTF*)(this->getChildByTag(tagName2));
+    lebname->setString(ptr->username.c_str());
 }
 
 void
 CGameLayer::gameSchedule(float dt){
-    
+    updateMaininfo();
+    updateDowninfo();
+    updateUpinfo();
 }
 
 void
-CGameLayer::netSchedule(float dt){
-    
+CGameLayer::netSchedule(){
+    int opt = 0;
+    string rst;
+    if (conDelegete::instance()->recv_message(opt, rst)){
+        if (opt == opt_play_list){
+            deskMamager::instance()->updatePlayInfo(rst);
+        }
+    }
+
 }
 
 bool

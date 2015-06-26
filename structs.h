@@ -61,6 +61,7 @@ typedef struct _operator_message{
 
 #define opt_login       100 // 登录
 #define opt_add_desk    101 // 加入桌子
+#define opt_play_list   102
 
 
 // 通讯头

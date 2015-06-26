@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "cocos2d.h"
+#include <thread>
 
 #include <vector>
 #include "CPlayer.h"
@@ -36,8 +37,12 @@ class CGameLayer : public CCLayer {
     void    gameSchedule(float dt);
     
     // 网络调度
-    void    netSchedule(float dt);
+    void    netSchedule();
 
+#define stat_not_start 10
+#define stat_started   11
+    
+    int     _game_stat = 0;
     int     _upplayer = 0;
     int     _downplayer = 0;
     int     _mainplayer = 0;
@@ -52,6 +57,7 @@ class CGameLayer : public CCLayer {
     
 public:
     static CCScene* scene();
+    shared_ptr<thread> thread_ptr;
 };
 
 #endif /* defined(__redten__CGameLayer__) */

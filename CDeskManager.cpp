@@ -35,6 +35,19 @@ CDeskManager::setPlayInfo(const string& info){
 }
 
 void
+CDeskManager::updatePlayInfo(const string& info){
+    map<string, string> tmp;
+    DoSeparate(info, "\n", tmp);
+    ostringstream os;
+    map<string, string>::iterator it;
+    for (int i=0; i<3; ++i) {
+        os.str("");
+        os << "p" << i;
+        updatePlayer(i, tmp);
+    }
+}
+
+void
 CDeskManager::addPlayer(bool main, int pos, map<string,string>&mapInfo){
     lock_guard<mutex> lk(_mutex);
     
@@ -44,7 +57,7 @@ CDeskManager::addPlayer(bool main, int pos, map<string,string>&mapInfo){
         ptr->isMainPlayer = main;
         ptr->sorcer = accountMgr::instance()->sorcer;
         ptr->username = accountMgr::instance()->username;
-        printf("%s, %s", ptr->username.c_str(), accountMgr::instance()->username.c_str());
+        //printf("%s, %s", ptr->username.c_str(), accountMgr::instance()->username.c_str());
     }
     else{
         ostringstream osr;
@@ -57,10 +70,29 @@ CDeskManager::addPlayer(bool main, int pos, map<string,string>&mapInfo){
             ptr->isReady = (mapInfo[osr.str()] == "1");
             ptr->sorcer = atoi(mapInfo[oss.str()].c_str());
             ptr->username = mapInfo[osp.str()];
+            //printf("%s, %d, %d", ptr->username.c_str(), ptr->sorcer, pos);
         }
     }
     //_mapPlayers[pos] = ptr;
     _mapPlayers.insert(make_pair(pos, ptr));
+}
+
+void
+CDeskManager::updatePlayer(int pos, map<string,string>&mapInfo){
+    player_ptr ptr = _mapPlayers[pos];
+    ostringstream osr;
+    osr << "r" << pos;
+    ostringstream osp;
+    osp << "p" << pos;
+    ostringstream oss;
+    oss << "s" << pos;
+    if (mapInfo.find(osr.str()) != mapInfo.end()) {
+        ptr->isReady = (mapInfo[osr.str()] == "1");
+        ptr->sorcer = atoi(mapInfo[oss.str()].c_str());
+        ptr->username = mapInfo[osp.str()];
+        //printf("%s, %d, %d", ptr->username.c_str(), ptr->sorcer, pos);
+    }
+
 }
 
 void
