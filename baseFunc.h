@@ -39,4 +39,29 @@ inline void DoSeparate(const string& mData, const string& mSepStr, map<string, s
     }
 }
 
+inline bool stringToList(list<string>& result, const char* src, const char* sep){
+    result.clear();
+    if (src == NULL || sep == NULL)
+        return false;
+    
+    size_t seplen = strlen(sep);
+    size_t seclen = strlen(src);
+    const char *bg = src;
+    const char *ed = src + seclen;
+    do{
+        const char* pos = strstr(bg, sep);
+        if (pos != NULL)
+        {
+            if (pos != bg)
+                result.push_back(string(bg, pos));
+            bg = pos + seplen;
+        }
+        else{
+            result.push_back(string(bg));
+            break;
+        }
+    }while(bg < ed);
+    return true;
+}
+
 #endif

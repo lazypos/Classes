@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <sstream>
 #include "CAccountManager.h"
+#include "CCardSprite.h"
 
 CDeskManager::CDeskManager(){
     //_vecPlayers.reserve(3);
@@ -101,7 +102,25 @@ CDeskManager::getPlayerMap(map<int ,player_ptr>& map){
     map = _mapPlayers;
 }
 
-
+void
+CDeskManager::initPlayerCards(const string& info){
+    map<string, string> tmp;
+    DoSeparate(info, "\n", tmp);
+    int z = atoi(tmp["z"].c_str());
+    player_ptr ptr = _mapPlayers[z];
+    ptr->isActive = true;
+    ptr->time = 30;
+    
+    player_ptr mptr = _mapPlayers[_mainpos];
+    list<string> lstcards;
+    stringToList(lstcards, tmp["c"].c_str(), ",");
+    
+    for (string c : lstcards) {
+        int n = atoi(c.c_str());
+        mptr->lstCards.push_back(CCardSprite::CreateSprite(n));
+    }
+    
+}
 
 
 

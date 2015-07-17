@@ -29,6 +29,7 @@ public:
     void addPlayer(bool main, int pos, map<string,string>&mapInfo);
     void updatePlayer(int pos, map<string,string>&mapInfo);
     void getPlayerMap(map<int ,player_ptr>& map);
+    void initPlayerCards(const string& info);
 };
 
 typedef mysigleton<CDeskManager> deskMamager;

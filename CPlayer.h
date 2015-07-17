@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <string>
 #include <list>
-#include "CCard.h"
+#include "CCardSprite.h"
 using namespace std;
 
 class CPlayer{
@@ -29,6 +29,7 @@ public:
     string     username = ""; // 用户名
     
     list<card_ptr>  lstCards; // 手牌
+    list<card_ptr>  lstFrontCards; // 门前的牌
     void    clearCards();   // 清理手牌
     
     CPlayer(){}

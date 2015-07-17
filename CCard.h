@@ -30,6 +30,6 @@ public:
     bool    isSelected();
 };
 
-typedef shared_ptr<CCard>   card_ptr;
+//typedef shared_ptr<CCard>   card_ptr;
 
 #endif /* defined(__redten__CCard__) */

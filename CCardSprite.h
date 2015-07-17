@@ -22,9 +22,11 @@ public:
     CCardSprite();
     ~CCardSprite();
     
-    static CCardSprite* CreateSprite(int seq);
+    static shared_ptr<CCardSprite> CreateSprite(int seq);
     
 };
+
+typedef shared_ptr<CCardSprite>   card_ptr;
 
 
 #endif /* defined(__redten__CCardSprite__) */

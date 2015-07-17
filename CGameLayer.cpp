@@ -167,6 +167,9 @@ CGameLayer::updateMaininfo(){
     //printf("%s,%u", name.c_str(), (int*)lebname);
     lebname->setString(ptr->username.c_str());
     //lebname->setString("hi");
+    
+    // 手牌
+    
 }
 
 void
@@ -217,8 +220,15 @@ CGameLayer::netSchedule(){
     int opt = 0;
     string rst;
     if (conDelegete::instance()->recv_message(opt, rst)){
-        if (opt == opt_play_list){
-            deskMamager::instance()->updatePlayInfo(rst);
+        switch (opt) {
+            case opt_play_list:
+                deskMamager::instance()->updatePlayInfo(rst);
+                break;
+            case opt_game_start:
+                deskMamager::instance()->initPlayerCards(rst);
+                break;
+            default:
+                break;
         }
     }
 
