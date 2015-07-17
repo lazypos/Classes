@@ -33,7 +33,7 @@ CGameLayer::init(){
     initDowninfo();
     initUpinfo();
     
-    
+    deskMamager::instance()->init();
     // 开启调度
     this->schedule(schedule_selector(CGameLayer::gameSchedule), 0.1f);
     //this->schedule(schedule_selector(CGameLayer::netSchedule), 0.1f);
@@ -95,7 +95,7 @@ CGameLayer::initDowninfo(){
     map<int ,player_ptr> map;
     deskMamager::instance()->getPlayerMap(map);
     player_ptr ptr = map[_downplayer];
-    
+
     CCSprite *sorcerPic1 = CCSprite::create("game_icon_treasure.png");
     sorcerPic1->setPosition(ccp(winSize.width-200, winSize.height/2+200));
     this->addChild(sorcerPic1);
@@ -154,6 +154,11 @@ CGameLayer::updateMaininfo(){
     deskMamager::instance()->getPlayerMap(map);
     player_ptr ptr = map[_mainplayer];
     
+    if (!ptr->ischanged) {
+        return;
+    }
+    ptr->ischanged = false;
+    
     // 分数
     int sorcer = ptr->sorcer;
     char buf[20];
@@ -169,7 +174,18 @@ CGameLayer::updateMaininfo(){
     //lebname->setString("hi");
     
     // 手牌
+    int len, posbegin, i;
+    len = 120 + (ptr->lstCards.size()-1)*50;
+    posbegin = (winSize.width-len)/2 + 60;
     
+    i = 0;
+    CCardSprite* card;
+    for (card_ptr cptr : ptr->lstCards ) {
+        card = cptr.get();
+        card->setPosition(ccp(posbegin+i*48, 120));
+        i++;
+        this->addChild(card, 3, card->getSeq());
+    }
 }
 
 void
@@ -177,6 +193,11 @@ CGameLayer::updateDowninfo(){
     map<int ,player_ptr> map;
     deskMamager::instance()->getPlayerMap(map);
     player_ptr ptr = map[_downplayer];
+    
+    if (!ptr->ischanged) {
+        return;
+    }
+    ptr->ischanged = false;
     
     // 分数
     int sorcer = ptr->sorcer;
@@ -195,6 +216,11 @@ CGameLayer::updateUpinfo(){
     map<int ,player_ptr> map;
     deskMamager::instance()->getPlayerMap(map);
     player_ptr ptr = map[_upplayer];
+    
+    if (!ptr->ischanged) {
+        return;
+    }
+    ptr->ischanged = false;
     
     // 分数
     int sorcer = ptr->sorcer;
@@ -219,16 +245,18 @@ void
 CGameLayer::netSchedule(){
     int opt = 0;
     string rst;
-    if (conDelegete::instance()->recv_message(opt, rst)){
-        switch (opt) {
-            case opt_play_list:
-                deskMamager::instance()->updatePlayInfo(rst);
-                break;
-            case opt_game_start:
-                deskMamager::instance()->initPlayerCards(rst);
-                break;
-            default:
-                break;
+    while (true) {
+        if (conDelegete::instance()->recv_message(opt, rst)){
+            switch (opt) {
+                case opt_play_list:
+                    deskMamager::instance()->updatePlayInfo(rst);
+                    break;
+                case opt_game_start:
+                    deskMamager::instance()->initPlayerCards(rst);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

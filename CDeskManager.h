@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <mutex>
 #include <map>
+#include <vector>
 #include "sigleton.h"
 #include "CPlayer.h"
 
@@ -22,8 +23,10 @@ public:
     int                     _mainpos;
     mutex                   _mutex;
     
+    vector<card_ptr>        _vecCards;
     
     CDeskManager();
+    void  init();
     void setPlayInfo(const string& info);
     void updatePlayInfo(const string& info);
     void addPlayer(bool main, int pos, map<string,string>&mapInfo);

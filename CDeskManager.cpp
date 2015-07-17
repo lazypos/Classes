@@ -18,6 +18,14 @@ CDeskManager::CDeskManager(){
 }
 
 void
+CDeskManager::init(){
+    for (int i=0; i<54; i++) {
+        card_ptr cpt = CCardSprite::CreateSprite(i);
+        _vecCards.push_back(cpt);
+    }
+}
+
+void
 CDeskManager::setPlayInfo(const string& info){
     
     map<string, string> tmp;
@@ -81,6 +89,7 @@ CDeskManager::addPlayer(bool main, int pos, map<string,string>&mapInfo){
 void
 CDeskManager::updatePlayer(int pos, map<string,string>&mapInfo){
     player_ptr ptr = _mapPlayers[pos];
+    ptr->ischanged = true;
     ostringstream osr;
     osr << "r" << pos;
     ostringstream osp;
@@ -110,14 +119,18 @@ CDeskManager::initPlayerCards(const string& info){
     player_ptr ptr = _mapPlayers[z];
     ptr->isActive = true;
     ptr->time = 30;
+    ptr->ischanged = true;
     
     player_ptr mptr = _mapPlayers[_mainpos];
+    mptr->ischanged = true;
     list<string> lstcards;
     stringToList(lstcards, tmp["c"].c_str(), ",");
     
     for (string c : lstcards) {
         int n = atoi(c.c_str());
-        mptr->lstCards.push_back(CCardSprite::CreateSprite(n));
+        card_ptr cpt = _vecCards[n];
+        
+        mptr->lstCards.push_back(cpt);
     }
     
 }

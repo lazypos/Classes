@@ -19,7 +19,8 @@ CCardSprite::~CCardSprite(){
 shared_ptr<CCardSprite>
 CCardSprite::CreateSprite(int seq){
     //CCardSprite *card = new CCardSprite;
-    card_ptr card = make_shared<CCardSprite>();
+    card_ptr card1 = make_shared<CCardSprite>();
+    CCardSprite *card = card1.get();
     if (seq == 52) {
         card->initWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("blackking"));
     }else if (seq == 53) {
@@ -48,5 +49,5 @@ CCardSprite::CreateSprite(int seq){
     }
     card->setSelected(false);
     card->setSeq(seq);
-    return card;
+    return card1;
 }

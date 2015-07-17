@@ -17,6 +17,7 @@ using namespace std;
 
 class CPlayer{
 public:
+    bool       ischanged = false; // 信息有改变
     int        seq = 0;     // 玩家序号
     float      time = 0;    // 玩家出牌剩余时间
     bool       isActive = false; // 是否是该玩家出牌

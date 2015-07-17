@@ -8,7 +8,7 @@
 
 #include "CResourceManager.h"
 
-#define NUM_SIZE 40
+#define NUM_SIZE 39
 
 CResourceManager::CResourceManager(){
     init();
